@@ -24,7 +24,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 function getDNSStats(domains) {
   if (domains.length === 0) return {};
-  console.log(domains);
   const coll = domains.map(domain => domain.split('.'));
   let max = coll[0];
   for (let i = 1; i < coll.length; i += 1) {
@@ -46,7 +45,6 @@ function getDNSStats(domains) {
       }
     })
     result[name] = count;
-    console.log(result);
   }
   return result;
 }
