@@ -23,9 +23,62 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  const row = matrix.length;
+  const column = matrix[0].length;
+  const coll = [];
+  for (let i = 0; i < row; i += 1) {
+    const item = matrix[i].map(el => {
+      if (el === true) {
+        el = 1;
+      } else { el = 0 }
+      return el
+    });
+    coll.push(item)
+  }
+
+  const mine = [];
+  for (let i = 0; i < row; i += 1) {
+    const item = coll[i].map((el, j) => {
+      if (i === 0) {
+        if (j === 0) {
+          el = coll[i][j + 1] + coll[i + 1][j] + coll[i + 1][j + 1];
+        }
+        if (j > 0 && j < column - 1) {
+          el = coll[i][j - 1] + coll[i][j + 1] + coll[i + 1][j] + coll[i + 1][j - 1] + coll[i + 1][j + 1];
+        }
+        if (j === column - 1) {
+          el = coll[i][j - 1] + coll[i + 1][j] + coll[i + 1][j - 1];
+        }
+      }
+      if (i > 0 && i < row - 1) {
+        if (j === 0) {
+          el = coll[i][j + 1] + coll[i - 1][j] + coll[i + 1][j] + coll[i - 1][j + 1] + coll[i + 1][j + 1];
+        }
+        if (j > 0 && j < column - 1) {
+          el = coll[i][j - 1] + coll[i][j + 1] + coll[i - 1][j] + coll[i + 1][j] + coll[i - 1][j - 1] + coll[i + 1][j - 1] + coll[i - 1][j + 1] + coll[i + 1][j + 1];
+        }
+        if (j === column - 1) {
+          el = coll[i][j - 1] + coll[i - 1][j] + coll[i + 1][j] + coll[i - 1][j - 1] + coll[i + 1][j - 1];
+        }
+      }
+      if (i === row - 1) {
+        if (j === 0) {
+          el = coll[i][j + 1] + coll[i - 1][j] + coll[i - 1][j + 1];
+        }
+        if (j > 0 && j < column - 1) {
+          el = coll[i][j - 1] + coll[i][j + 1] + coll[i - 1][j] + coll[i - 1][j - 1] + coll[i - 1][j + 1];
+        }
+        if (j === column - 1) {
+          el = coll[i][j - 1] + coll[i - 1][j] + coll[i - 1][j - 1];
+        }
+      }
+      return el
+    });
+    mine.push(item)
+  }
+
+  return mine;
 }
 
 module.exports = {
